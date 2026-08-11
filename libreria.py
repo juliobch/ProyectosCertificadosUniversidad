@@ -4,7 +4,12 @@
 
 # LADRILLO 1: LIBRERÍAS (módulos importados)
 import unicodedata  # para quitar acentos al normalizar texto
+from pathlib import Path  # para construir rutas que funcionen desde cualquier carpeta
 from openpyxl import load_workbook  # lee archivos .xlsx (nunca los modifica)
+
+# Ruta base del proyecto: la carpeta donde está ESTE archivo (libreria.py).
+# Así la app encuentra Insumos/ sin importar desde dónde se ejecute.
+CARPETA_PROYECTO = Path(__file__).resolve().parent
 
 
 # ---------------------------------------------------------------------------
@@ -28,13 +33,18 @@ def normalizar(texto):
 # ---------------------------------------------------------------------------
 # LADRILLO 3: FUNCIÓN leer_maestro
 # ---------------------------------------------------------------------------
-def leer_maestro(ruta="Insumos/Maestro_Estudiantes.xlsx"):
+def leer_maestro(ruta=None):
     """Lee el archivo maestro y devuelve una LISTA de DICCIONARIOS por estudiante.
 
     Cada estudiante es un dict:
         {'identificacion': int, 'nombre': str, 'correo': str,
          'programa': str, 'programa_norm': str, 'cohorte': str}
+
+    Si no se pasa ruta, se usa la de Insumos/ junto al proyecto.
     """
+    if ruta is None:
+        # Ruta absoluta al Excel, calculada desde la carpeta del proyecto
+        ruta = CARPETA_PROYECTO / "Insumos" / "Maestro_Estudiantes.xlsx"
     libro = load_workbook(ruta, read_only=True, data_only=True)
     hoja = libro.active  # primera (y única) hoja del Excel
 
@@ -73,13 +83,18 @@ def leer_maestro(ruta="Insumos/Maestro_Estudiantes.xlsx"):
 # ---------------------------------------------------------------------------
 # LADRILLO 5: FUNCIÓN leer_evaluaciones
 # ---------------------------------------------------------------------------
-def leer_evaluaciones(ruta="Insumos/Registro_Evaluaciones.xlsx"):
+def leer_evaluaciones(ruta=None):
     """Lee las notas/asistencia y devuelve una LISTA de DICCIONARIOS por fila.
 
     Cada registro es un dict:
         {'identificacion': int, 'programa': str, 'programa_norm': str,
          'modulo': str, 'nota': float, 'asistencia': float, 'fecha': str}
+
+    Si no se pasa ruta, se usa la de Insumos/ junto al proyecto.
     """
+    if ruta is None:
+        # Ruta absoluta al Excel, calculada desde la carpeta del proyecto
+        ruta = CARPETA_PROYECTO / "Insumos" / "Registro_Evaluaciones.xlsx"
     libro = load_workbook(ruta, read_only=True, data_only=True)
     hoja = libro.active
 

@@ -9,5 +9,11 @@ venv/
 # Salidas generadas por la app
 salidas/
 
+# Archivos temporales
+*.log
+*.tmp
+*.bak
+.pytest_cache/
+
 # Archivos del sistema
 .DS_Store
