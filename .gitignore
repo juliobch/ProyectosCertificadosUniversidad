@@ -1,0 +1,13 @@
+# Archivos generados por Python
+__pycache__/
+*.pyc
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Salidas generadas por la app
+salidas/
+
+# Archivos del sistema
+.DS_Store

@@ -1,0 +1,189 @@
+/* static/estilo.css — SALON: colores de Academia Horizonte (azul marino y dorado) */
+
+/* VARIABLES de color del manual de marca */
+:root {
+  --azul-marino: #0b2545;
+  --azul-medio: #13315c;
+  --dorado: #d4af37;
+  --dorado-claro: #f4e6b2;
+  --blanco: #ffffff;
+  --gris-claro: #f4f6f9;
+}
+
+/* Cuerpo de la página */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--gris-claro);
+  color: #1f2937;
+}
+
+/* ENCABEZADO azul marino con barra dorada */
+.cabecera {
+  background: linear-gradient(135deg, var(--azul-marino), var(--azul-medio));
+  color: var(--blanco);
+  padding: 28px 32px;
+  border-bottom: 6px solid var(--dorado);
+}
+
+.cabecera h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.cabecera p {
+  margin: 6px 0 0;
+  color: var(--dorado-claro);
+  font-size: 14px;
+}
+
+/* Contenedor central */
+.contenedor {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* CONTADORES (las 4 tarjetas de arriba) */
+.contadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.tarjeta {
+  background: var(--blanco);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(11, 37, 69, 0.15);
+  border-top: 5px solid var(--dorado);
+}
+
+.tarjeta .numero {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--azul-marino);
+}
+
+.tarjeta .etiqueta {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* COLORES de cada tarjeta según el tipo de certificado */
+.tarjeta.verde { border-top-color: #16a34a; }
+.tarjeta.azul { border-top-color: #2563eb; }
+.tarjeta.roja { border-top-color: #dc2626; }
+
+/* Filtro por programa */
+.filtro {
+  background: var(--blanco);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(11, 37, 69, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filtro select,
+.filtro button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+.filtro button {
+  background: var(--azul-marino);
+  color: var(--blanco);
+  border: none;
+  cursor: pointer;
+}
+
+.filtro button:hover {
+  background: var(--azul-medio);
+}
+
+/* TABLA de resultados */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--blanco);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(11, 37, 69, 0.15);
+}
+
+.tabla th {
+  background: var(--azul-marino);
+  color: var(--blanco);
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* COLOR de la fila según el tipo de certificado:
+   verde = Aprobación, azul = Participación, rojo = Sin certificado */
+.fila-aprobacion { background: #e7f7ee; color: #14532d; }
+.fila-participacion { background: #eaf2ff; color: #1e3a8a; }
+.fila-sin { background: #fdecec; color: #7f1d1d; }
+
+/* Insignia del tipo de certificado dentro de la fila */
+.insignia {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fila-aprobacion .insignia { background: #16a34a; color: var(--blanco); }
+.fila-participacion .insignia { background: #2563eb; color: var(--blanco); }
+.fila-sin .insignia { background: #dc2626; color: var(--blanco); }
+
+/* Sección de inconsistencias */
+.inconsistencias {
+  margin-top: 32px;
+  background: #fff7ed;
+  border-left: 6px solid var(--dorado);
+  border-radius: 8px;
+  padding: 18px 20px;
+}
+
+.inconsistencias h2 {
+  margin: 0 0 12px;
+  color: var(--azul-marino);
+  font-size: 20px;
+}
+
+.inconsistencias li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.inconsistencias .cedula {
+  font-weight: 700;
+  color: var(--azul-marino);
+}
+
+/* Pie de página */
+.pie {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+  font-size: 13px;
+}

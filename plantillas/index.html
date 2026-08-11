@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Horizonte - Certificados</title>
+  <!-- Hoja de estilos del Salón (azul marino y dorado) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+
+  <!-- ENCABEZADO de Academia Horizonte -->
+  <header class="cabecera">
+    <h1>Academia Horizonte</h1>
+    <p>Emisión de certificados de programas técnicos · Cohorte 2026-A</p>
+  </header>
+
+  <main class="contenedor">
+
+    <!-- CONTADORES de certificados -->
+    <section class="contadores">
+      <div class="tarjeta verde">
+        <div class="numero">{{ aprobacion }}</div>
+        <div class="etiqueta">Certificados de Aprobación</div>
+      </div>
+      <div class="tarjeta azul">
+        <div class="numero">{{ participacion }}</div>
+        <div class="etiqueta">Certificados de Participación</div>
+      </div>
+      <div class="tarjeta roja">
+        <div class="numero">{{ sin_certificado }}</div>
+        <div class="etiqueta">Estudiantes sin certificado</div>
+      </div>
+      <div class="tarjeta">
+        <div class="numero">{{ total_estudiantes }}</div>
+        <div class="etiqueta">Total de estudiantes</div>
+      </div>
+    </section>
+
+    <!-- FILTRO por programa (recarga la página con ?programa=...) -->
+    <form class="filtro" method="get" action="/">
+      <label for="programa"><strong>Filtrar por programa:</strong></label>
+      <select name="programa" id="programa">
+        <option value="">Todos los programas</option>
+        {% for programa in programas %}
+        <option value="{{ programa }}" {% if programa == filtro %}selected{% endif %}>
+          {{ programa }}
+        </option>
+        {% endfor %}
+      </select>
+      <button type="submit">Filtrar</button>
+      {% if filtro %}
+      <a href="/" style="color:#0b2545;">Quitar filtro</a>
+      {% endif %}
+    </form>
+
+    <!-- TABLA de resultados (solo muestra; no calcula) -->
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Programa</th>
+          <th>Módulos</th>
+          <th>Promedio</th>
+          <th>Asistencia</th>
+          <th>Certificado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fila in tabla %}
+        <tr class="{{ 'fila-aprobacion' if fila.tipo == 'APROBACION' else
+                     'fila-participacion' if fila.tipo == 'PARTICIPACION' else
+                     'fila-sin' }}">
+          <td>{{ fila.nombre }}</td>
+          <td>{{ fila.programa }}</td>
+          <td>{{ fila.modulos }}</td>
+          <td>{{ "%.2f"|format(fila.promedio) }}</td>
+          <td>{{ "%.2f"|format(fila.asistencia) }}</td>
+          <td>
+            <span class="insignia">
+              {{ 'Aprobación' if fila.tipo == 'APROBACION' else
+                 'Participación' if fila.tipo == 'PARTICIPACION' else
+                 'Sin certificado' }}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- SECCIÓN de inconsistencias -->
+    <section class="inconsistencias">
+      <h2>Inconsistencias detectadas</h2>
+      {% if inconsistencias %}
+      <ul>
+        {% for inc in inconsistencias %}
+        <li>
+          <span class="cedula">{{ inc.cedula }}</span>
+          - {{ inc.nombre }}: {{ inc.detalle }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No se encontraron inconsistencias.</p>
+      {% endif %}
+    </section>
+
+  </main>
+
+  <footer class="pie">Academia Horizonte · Sistema de certificados</footer>
+
+</body>
+</html>
