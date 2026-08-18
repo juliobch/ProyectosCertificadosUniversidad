@@ -14,6 +14,10 @@ salidas/
 *.tmp
 *.bak
 .pytest_cache/
+.env
+.env.*
+!.env.example
+.vercel/
 
 # Archivos del sistema
 .DS_Store

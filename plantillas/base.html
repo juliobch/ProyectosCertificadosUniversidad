@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block titulo %}Academia Horizonte{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
+</head>
+<body>
+  <header class="cabecera">
+    <div>
+      <h1>Academia Horizonte</h1>
+      <p>Sistema privado de certificados</p>
+    </div>
+    {% if usuario_actual %}
+    <nav class="navegacion" aria-label="Navegación principal">
+      <a href="{{ url_for('index') }}">Panel</a>
+      {% if usuario_actual.rol == 'administrador' %}
+      <a href="{{ url_for('administrar_usuarios') }}">Usuarios</a>
+      {% endif %}
+      <a href="{{ url_for('mi_contrasena') }}">Mi contraseña</a>
+      <span>{{ usuario_actual.correo }} · {{ usuario_actual.rol }}</span>
+      <form method="post" action="{{ url_for('cerrar_sesion') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="boton-enlace">Cerrar sesión</button>
+      </form>
+    </nav>
+    {% endif %}
+  </header>
+
+  <main class="contenedor {% block clase_contenedor %}{% endblock %}">
+    {% for categoria, mensaje in get_flashed_messages(with_categories=true) %}
+    <div class="alerta alerta-{{ categoria }}" role="alert">{{ mensaje }}</div>
+    {% endfor %}
+    {% block contenido %}{% endblock %}
+  </main>
+
+  <footer class="pie">Academia Horizonte · Sistema de certificados</footer>
+</body>
+</html>

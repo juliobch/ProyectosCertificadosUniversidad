@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block titulo %}Iniciar sesión - Academia Horizonte{% endblock %}
+{% block clase_contenedor %}contenedor-acceso{% endblock %}
+{% block contenido %}
+  <section class="acceso">
+    <p class="sobrelinea">Acceso restringido</p>
+    <h2>Bienvenido al sistema</h2>
+    <p>Ingrese con el correo y la contraseña asignados por un administrador.</p>
+    {% if error_configuracion %}<div class="alerta alerta-error" role="alert">{{ error_configuracion }}</div>{% endif %}
+    <form method="post" class="formulario-vertical">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="hidden" name="siguiente" value="{{ siguiente }}">
+      <label for="correo">Correo</label>
+      <input id="correo" name="correo" type="email" autocomplete="username" required autofocus>
+      <label for="contrasena">Contraseña</label>
+      <input id="contrasena" name="contrasena" type="password" autocomplete="current-password" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+  </section>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }} - Academia Horizonte{% endblock %}
+{% block clase_contenedor %}contenedor-acceso{% endblock %}
+{% block contenido %}
+  <section class="acceso"><p class="sobrelinea">Seguridad</p><h2>{{ titulo }}</h2><p>{{ mensaje }}</p><a class="boton" href="{{ url_for('index') }}">Volver al panel</a></section>
+{% endblock %}

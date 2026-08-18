@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}Administrar usuarios - Academia Horizonte{% endblock %}
+{% block contenido %}
+  <section class="titulo-pagina">
+    <div><p class="sobrelinea">Administración</p><h2>Usuarios del sistema</h2></div>
+    <p>Solo los administradores pueden crear y modificar accesos.</p>
+  </section>
+
+  <section class="panel-formulario">
+    <h3>Agregar usuario</h3>
+    <form method="post" class="formulario-rejilla">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label>Correo<input name="correo" type="email" autocomplete="off" required></label>
+      <label>Contraseña inicial<input name="contrasena" type="password" minlength="12" autocomplete="new-password" required></label>
+      <label>Rol<select name="rol"><option value="normal">Normal</option><option value="administrador">Administrador</option></select></label>
+      <button type="submit">Crear usuario</button>
+    </form>
+    <p class="ayuda">La contraseña debe tener al menos 12 caracteres. Entréguela al usuario por un canal seguro.</p>
+  </section>
+
+  <div class="tabla-contenedor">
+    <table class="tabla tabla-usuarios">
+      <caption>Usuarios registrados</caption>
+      <thead><tr><th>Correo</th><th>Creado</th><th>Configuración</th><th>Acción</th></tr></thead>
+      <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+          <td>
+            {{ usuario.correo }}{% if usuario.id == usuario_actual.id %} <strong>(usted)</strong>{% endif %}
+            <form id="usuario-{{ usuario.id }}" method="post" action="{{ url_for('editar_usuario', usuario_id=usuario.id) }}"></form>
+          </td>
+          <td>{{ usuario.creado_en.strftime('%Y-%m-%d') }}</td>
+          <td class="controles-usuario">
+            <input form="usuario-{{ usuario.id }}" type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <select form="usuario-{{ usuario.id }}" name="rol" aria-label="Rol de {{ usuario.correo }}" {% if usuario.id == usuario_actual.id %}disabled{% endif %}>
+              <option value="normal" {% if usuario.rol == 'normal' %}selected{% endif %}>Normal</option>
+              <option value="administrador" {% if usuario.rol == 'administrador' %}selected{% endif %}>Administrador</option>
+            </select>
+            <label><input form="usuario-{{ usuario.id }}" type="checkbox" name="activo" value="1" {% if usuario.activo %}checked{% endif %} {% if usuario.id == usuario_actual.id %}disabled{% endif %}> Activo</label>
+            <input form="usuario-{{ usuario.id }}" name="nueva_contrasena" type="password" minlength="12" placeholder="Nueva contraseña (opcional)" {% if usuario.id == usuario_actual.id %}disabled{% endif %}>
+          </td>
+          <td><button form="usuario-{{ usuario.id }}" type="submit" {% if usuario.id == usuario_actual.id %}disabled{% endif %}>Guardar</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block titulo %}Cambiar contraseña - Academia Horizonte{% endblock %}
+{% block clase_contenedor %}contenedor-acceso{% endblock %}
+{% block contenido %}
+  <section class="acceso">
+    <p class="sobrelinea">Cuenta personal</p>
+    <h2>Cambiar contraseña</h2>
+    <p>Confirme su contraseña actual y elija una nueva de al menos 12 caracteres.</p>
+    <form method="post" class="formulario-vertical">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="contrasena_actual">Contraseña actual</label>
+      <input id="contrasena_actual" name="contrasena_actual" type="password" autocomplete="current-password" required>
+      <label for="nueva_contrasena">Nueva contraseña</label>
+      <input id="nueva_contrasena" name="nueva_contrasena" type="password" minlength="12" autocomplete="new-password" required>
+      <button type="submit">Actualizar contraseña</button>
+    </form>
+  </section>
+{% endblock %}
